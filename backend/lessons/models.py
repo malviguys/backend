@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 
-from lessons.cost import Cost
+from lessons.cost import CostField
 
 # Create your models here.
 
@@ -12,7 +12,7 @@ class Lesson(models.Model):
     students = models.ManyToManyField(get_user_model())
     date_time = models.DateTimeField(auto_now=False)
     duration = models.DurationField()
-    #cost = Cost()
+    cost = CostField()
 
     def __str__(self) -> str:
         return f"Lesson {self.name} of instrument {self.instrument}\n- presented by: {self.teacher}\nDate and time:{self.date_time}"
