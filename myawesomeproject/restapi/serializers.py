@@ -3,6 +3,6 @@ from restapi.models import Lesson
 
 class LessonSerializer(serializers.ModelSerializer):
   class Meta:
-    fields = ("id", "name","teacher","instrument","students","date_time","duration","cost")
+    fields = "__all__"
     model = Lesson
     

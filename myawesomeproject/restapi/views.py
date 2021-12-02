@@ -1,8 +1,8 @@
 from rest_framework import generics, viewsets
-
+from rest_framework.decorators import action
 from restapi.models import Lesson
 from restapi.serializers import LessonSerializer
-
+from rest_framework.response import Response
 
 # class LessonList(generics.ListCreateAPIView):
 #     queryset = Lesson.objects.all()
@@ -16,6 +16,3 @@ from restapi.serializers import LessonSerializer
 class LessonViewSet(viewsets.ModelViewSet):
     queryset = Lesson.objects.all()
     serializer_class = LessonSerializer
-
-
-

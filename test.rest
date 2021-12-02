@@ -1,1 +1,46 @@
 GET http://localhost:8000/api/v1/lessons
+
+###
+
+GET http://localhost:8000/api/v1/lessons/1
+
+
+###
+
+
+POST http://localhost:8000/api/v1/lessons/
+Content-Type: application/json
+
+{
+  "name": "pingflood",
+  "teacher": "carlo",
+  "instrument": "chitarra",
+  "students": [
+    1
+  ],
+  "date_time": "2021-12-01T12:47:59Z",
+  "duration": "00:00:01",
+  "cost": "3.00"
+}
+
+
+###
+
+PUT http://localhost:8000/api/v1/lessons/1/
+Content-Type: application/json
+
+{
+  "name": "pingflood",
+  "teacher": "carlo",
+  "instrument": "pianoforte",
+  "students": [
+    1
+  ],
+  "date_time": "2021-12-01T12:47:59Z",
+  "duration": "00:00:01",
+  "cost": "3.00"
+}
+
+###
+
+DELETE http://localhost:8000/api/v1/lessons/2/
