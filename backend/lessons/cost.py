@@ -1,7 +1,11 @@
 from django.db import models
+from math import modf, floor
 
 class Cost():
-    def __init__(self, euros:int=0, cents:int=0):
+    def __init__(self, cost:float):
+        cents, euros = modf(cost)
+        cents = floor(cents*100)
+        euros = floor(euros)
         if euros < 0 or cents < 0 :
             raise ValueError("You can't create a cost with negative values!")
         if cents >= 100:
