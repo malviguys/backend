@@ -1,4 +1,6 @@
-GET http://localhost:8000/api/v1/lessons
+GET http://localhost:8000/api/v1/lessons/
+Authorization: Token cb6fa7bdd7a68e8da08a88fd82a5057f1c13e8a4
+
 
 ###
 
@@ -51,10 +53,15 @@ DELETE http://localhost:8000/api/v1/lessons/2/
 
 ###
 post http://localhost:8000/api/v1/auth/login/
+Content-Type: application/json
+
+{
+  "username": "studente1",
+  "password": "paola12345"
+}
 
 ###
 post http://localhost:8000/api/v1/auth/logout/
-
 
 ###
 post http://localhost:8000/api/v1/auth/password/reset/
