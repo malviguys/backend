@@ -44,22 +44,15 @@ def test_lessons_anon_user_get_nothing():
     assert contains(response, 'detail', 'credentials were not provided')
 
 
-# def test_lesson_name_not_capitalized(db):
-#     lesson = mixer.blend('restapi.Lesson', name='wrong name')
-#     with pytest.raises(ValidationError):
-#         lesson.full_clean()
+def test_lesson_name_not_capitalized(db):
+    lesson = mixer.blend('restapi.Lesson', name='sasdasdas dong name')
+    with pytest.raises(ValidationError) as err:
+        lesson.full_clean()
+    assert 'Lesson name must be capitalized' in str(err)
 
 
-# def test_lesson_title_of_length_51_rises_exception(db):
-#     lesson = mixer.blend('restapi.Lesson', name='A'*60)
-#     with pytest.raises(ValidationError) as err:
-#         lesson.full_clean()
-#     assert 'Lesson name must be less than 50 char' in '\n'.join(
-#         err.value.message)
-
-
-# def test_example1():
-#     assert 1==1
-
-# def test_example2():
-#     assert 2==2
+def test_lesson_title_of_length_51_rises_exception(db):
+    lesson = mixer.blend('restapi.Lesson', name='A'*51)
+    with pytest.raises(ValidationError) as err:
+        lesson.full_clean()
+    assert 'Lesson name must be less than 50 char' in str(err)

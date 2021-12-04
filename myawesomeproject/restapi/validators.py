@@ -6,11 +6,11 @@ from dateutil.relativedelta import relativedelta
 
 def validate_name(value: str) -> None:
     if len(value) == 0:
-        raise ValidationError('Lesson name must not be empty')
+        raise ValidationError(message='Lesson name must not be empty')
     if len(value) > 50:
-        raise ValidationError('Lesson name must be less than 50 char')
+        raise ValidationError(message='Lesson name must be less than 50 char')
     if not value[0].isupper():
-        raise ValidationError('Lesson name must be capitalized')
+        raise ValidationError(message='Lesson name must be capitalized')
 
 
 def validate_date_time(value: datetime) -> None:
@@ -18,28 +18,30 @@ def validate_date_time(value: datetime) -> None:
     limitePrenotazioni = TODAY + timedelta(weeks=12)
 
     if value.timestamp() < TODAY.timestamp():
-        raise ValidationError('Lesson date must be > now')
+        raise ValidationError(message='Lesson date must be > now')
     if value.timestamp() > limitePrenotazioni.timestamp():
-        raise ValidationError('Lesson date must not be < now + 3months')
+        raise ValidationError(
+            message='Lesson date must not be < now + 3months')
     pass
 
 
 def validate_duration(value: timedelta) -> None:
     if value <= timedelta(minutes=15):
-        raise ValidationError('Lesson duration must not be > 15min')
+        raise ValidationError(message='Lesson duration must not be > 15min')
     if value > timedelta(minutes=120):
-        raise ValidationError('Lesson duration must not be < 2h')
+        raise ValidationError(message='Lesson duration must not be < 2h')
 
 
 def validate_cost(value: float) -> None:
     integerPart = int(value)
     decimalPart = value-int(value)
     if value <= 0:
-        raise ValidationError("Lesson cost must be positive value")
+        raise ValidationError(message="Lesson cost must be positive value")
     if decimalPart >= 100:
-        raise ValidationError("The decimal part of lesson cost must be < 100")
+        raise ValidationError(
+            message="The decimal part of lesson cost must be < 100")
     if value > 256:
-        raise ValidationError("The maximum cost for lesson is 256$")
+        raise ValidationError(message="The maximum cost for lesson is 256$")
 
 
 def validate_teacher(value: enumerate) -> None:
