@@ -2,6 +2,9 @@ import pytest
 from django.urls import reverse
 from django.core.exceptions import ValidationError
 from mixer.backend.django import mixer
+from rest_framework.test import APIClient
+import json
+from rest_framework import status
 
 
 @pytest.fixture()
@@ -32,11 +35,12 @@ def contains(response, key, value):
         return False
     return value in obj[key]
 
+
 def test_lessons_anon_user_get_nothing():
-    path = reverse('lessons-by-students')
+    path = reverse('lessons-by-students-list')
     client = get_client()
     response = client.get(path)
-    assert response.status_code == HTTP_403_FORBIDDEN
+    assert response.status_code == status.HTTP_403_FORBIDDEN
     assert contains(response, 'detail', 'credentials were not provided')
 
 
