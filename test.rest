@@ -1,5 +1,5 @@
 GET http://localhost:8000/api/v1/lessons
-Authorization: Token 8e40f8e69e60d2cc11763f345f584e672099b646
+Authorization: Token 0ade1a6f46bbb0d8be634a9ef7943d22777f4046
 ###
 
 GET http://localhost:8000/api/v1/lessons/1
@@ -45,7 +45,7 @@ DELETE http://localhost:8000/api/v1/lessons/2/
 ################################################# Book
 
 GET http://localhost:8000/api/v1/booking
-Authorization: Token 66c83b58bfb99f26a858ddb6189f25c8f16900c5
+Authorization: Token 0ade1a6f46bbb0d8be634a9ef7943d22777f4046
 ###
 
 GET http://localhost:8000/api/v1/booking/1
@@ -84,7 +84,7 @@ post http://localhost:8000/api/v1/auth/login/
 Content-Type: application/json
 
 {
-  "username": "t1",
+  "username": "s1",
   "password": "Paoletta.85"
 }
 

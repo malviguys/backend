@@ -6,5 +6,5 @@ urlpatterns = []
 
 router = routers.SimpleRouter()
 router.register(r'lessons', LessonView,basename='lesson')
-router.register(r'booking', StudentBookedList,basename='booking')
+router.register(r'booking', BookedView,basename='booking')
 urlpatterns += router.urls

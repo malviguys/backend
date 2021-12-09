@@ -17,7 +17,7 @@ class LessonView(viewsets.ModelViewSet):
     queryset = Lesson.objects.all()
 
 
-class StudentBookedList(viewsets.ModelViewSet):
+class BookedView(viewsets.ModelViewSet):
     # permission_classes=[AllowAny]
     permission_classes = [IsBookingOwner]
     serializer_class = BookingSerializer
@@ -34,3 +34,4 @@ class StudentBookedList(viewsets.ModelViewSet):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
