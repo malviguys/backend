@@ -5,5 +5,6 @@ from rest_framework import routers
 urlpatterns = []
 
 router = routers.SimpleRouter()
-router.register(r'lessons', LessonStudentViewSet,basename='lessons-by-students')
+router.register(r'lessons', LessonView,basename='lesson')
+router.register(r'booking', StudentBookedList,basename='booking')
 urlpatterns += router.urls
