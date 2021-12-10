@@ -39,9 +39,9 @@ Authorization: Token {{authToken}}
 Content-Type: {{type}}
 
 {
-  "name": "Chitarra 4",
-  "teacher": 1,
+  "name": "Chitarra XYZ",
   "instrument": 1,
+  "teacher": 1,
   "date_time": "2021-12-21T20:54:00Z",
   "duration": "01:00:00",
   "cost": "10.00",
