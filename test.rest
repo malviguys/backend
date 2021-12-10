@@ -1,30 +1,58 @@
-GET http://localhost:8000/api/v1/lessons
-Authorization: Token 0ade1a6f46bbb0d8be634a9ef7943d22777f4046
+
+@baseUrl = http://localhost:8000/api/v1
+@authToken = {{login.response.body.key}}
+@type = application/json
+
+# @name login
+POST {{baseUrl}}/auth/login/
+Content-Type: {{type}}
+
+{
+  "username": "t1",
+  "password": "Paoletta.85"
+}
 ###
+# @name login
+POST {{baseUrl}}/auth/login/
+Content-Type: {{type}}
 
-GET http://localhost:8000/api/v1/lessons/1
-Authorization: Token 8e40f8e69e60d2cc11763f345f584e672099b646
+{
+  "username": "s1",
+  "password": "Paoletta.85"
+}
+
+### LESSONS ####
+
 ###
-
-POST http://localhost:8000/api/v1/lessons/
-Authorization: Token 8e40f8e69e60d2cc11763f345f584e672099b646
-Content-Type: application/json
-
-  {
-    "name": "Chitarra 4",
-    "teacher": "G",
-    "instrument": "G",
-    "date_time": "2021-12-21T20:54:00Z",
-    "duration": "01:00:00",
-    "cost": "10.00",
-    "students": [1]
-  }
+GET {{baseUrl}}/lessons
+Authorization: Token {{authToken}}
 
 
 ###
+GET {{baseUrl}}/lessons/1
+Authorization: Token {{authToken}} 
 
-PUT http://localhost:8000/api/v1/lessons/1/
-Content-Type: application/json
+
+###
+POST {{baseUrl}}/lessons/
+Authorization: Token {{authToken}} 
+Content-Type: {{type}}
+
+{
+  "name": "Chitarra 4",
+  "teacher": 1,
+  "instrument": 1,
+  "date_time": "2021-12-21T20:54:00Z",
+  "duration": "01:00:00",
+  "cost": "10.00",
+  "students": [1]
+}
+
+
+
+###
+PUT {{baseUrl}}/lessons/1/
+Content-Type: {{type}}
 
 {
   "name": "Testazzo",
@@ -38,23 +66,28 @@ Content-Type: application/json
   "cost": "3.00"
 }
 
+
+
 ###
+DELETE {{baseUrl}}/lessons/2/
 
-DELETE http://localhost:8000/api/v1/lessons/2/
+### BOOKINGS ####
 
-################################################# Book
-
-GET http://localhost:8000/api/v1/booking
-Authorization: Token 0ade1a6f46bbb0d8be634a9ef7943d22777f4046
 ###
+GET {{baseUrl}}/booking
+Authorization: Token {{authToken}} 
 
-GET http://localhost:8000/api/v1/booking/1
-Authorization: Token 66c83b58bfb99f26a858ddb6189f25c8f16900c5
+
 ###
+GET {{baseUrl}}/booking/1
+Authorization: Token {{authToken}} 
 
-POST http://localhost:8000/api/v1/booking/
-Content-Type: application/json
-Authorization: Token  66c83b58bfb99f26a858ddb6189f25c8f16900c5
+
+
+###
+POST {{baseUrl}}/booking/
+Content-Type: {{type}}
+Authorization: Token {{authToken}} 
 
 {
   "lesson": 2
@@ -63,8 +96,8 @@ Authorization: Token  66c83b58bfb99f26a858ddb6189f25c8f16900c5
 
 ###
 
-PUT http://localhost:8000/api/v1/booking/1/
-Content-Type: application/json
+PUT {{baseUrl}}/booking/1/
+Content-Type: {{type}}
 
 {
   "student": 2,
@@ -74,30 +107,20 @@ Content-Type: application/json
 
 
 ###
+DELETE {{baseUrl}}/booking/3/
 
-DELETE http://localhost:8000/api/v1/booking/3/
-
-################################################# AUTH ENDPOINT 
-
-###
-post http://localhost:8000/api/v1/auth/login/
-Content-Type: application/json
-
-{
-  "username": "s1",
-  "password": "Paoletta.85"
-}
-
-###
-POST http://localhost:8000/api/v1/auth/logout/
-
-###
-post http://localhost:8000/api/v1/auth/password/reset/
 
 
 ###
-post http://localhost:8000/api/v1/auth/password/reset/confirm/
+POST {{baseUrl}}/auth/logout/
+
+###
+POST {{baseUrl}}/auth/password/reset/
 
 
 ###
-post http://localhost:8000/api/v1/auth/password/change/
+POST {{baseUrl}}/auth/password/reset/confirm/
+
+
+###
+POST {{baseUrl}}/auth/password/change/
