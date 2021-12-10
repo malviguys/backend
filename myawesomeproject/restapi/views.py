@@ -12,14 +12,13 @@ from restapi.permissions import *
 
 
 class LessonView(viewsets.ModelViewSet):
-    permission_classes = [IsOwnerOrReadOnly, IsLessonEditor, IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
     serializer_class = LessonSerializer
     queryset = Lesson.objects.all()
 
 
 class BookedView(viewsets.ModelViewSet):
-    # permission_classes=[AllowAny]
-    permission_classes = [IsBookingOwner]
+    permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
     serializer_class = BookingSerializer
 
     def get_queryset(self):

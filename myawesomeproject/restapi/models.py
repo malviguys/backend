@@ -44,7 +44,7 @@ class Teacher(models.Model):
         get_user_model(), on_delete=models.CASCADE, related_name='teacher')
     name = models.CharField(max_length=50, validators=[
                             validate_name], default='')
-
+    
     def __str__(self) -> str:
         return f"{self.name}"
 
