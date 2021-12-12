@@ -39,7 +39,7 @@ Authorization: Token {{authToken}}
 Content-Type: {{type}}
 
 {
-  "name": "Chitarra XYZ",
+  "name": "Chitarra XYZjhkjhkjhkjhkjhkjhkjh",
   "instrument": 1,
   "teacher": 1,
   "date_time": "2021-12-21T20:54:00Z",
@@ -69,7 +69,8 @@ Content-Type: {{type}}
 
 
 ###
-DELETE {{baseUrl}}/lessons/2/
+DELETE {{baseUrl}}/lessons/10/
+Authorization: Token {{authToken}} 
 
 ### BOOKINGS ####
 
