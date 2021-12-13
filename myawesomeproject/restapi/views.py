@@ -24,11 +24,11 @@ class LessonView(viewsets.ModelViewSet):
             print("User ", user)
             if teacher != user:
                 print("Teacher is not the same as the logged in user")
-                return Response(status=status.HTTP_403_FORBIDDEN)
+                return Response(status=status.HTTP_403_FORBIDDEN, data={"detail": "You do not have permission to perform this action."})
         except:
-            return Response(status=status.HTTP_403_FORBIDDEN)
+            return Response(status=status.HTTP_403_FORBIDDEN, data={"detail": "You do not have permission to perform this action."})
         return super().create(request, *args, **kwargs)
-    
+
 
 class BookedView(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated, IsOwnerOrReadOnlyBooking]

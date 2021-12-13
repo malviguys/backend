@@ -299,6 +299,8 @@ def test_student_cant_post_lessons(db):
         "cost": "11.50",
     }, format='json')
     assert response.status_code == status.HTTP_403_FORBIDDEN
+    assert contains(response, 'detail',
+                    'You do not have permission to perform this action.')
 
 
 def test_student_cant_delete_lessons():
@@ -312,11 +314,30 @@ def test_student_cant_delete_lessons():
     client.force_authenticate(user=user)
     response = client.delete(reverse('lessons-detail', kwargs={'pk': 1}))
     assert response.status_code == status.HTTP_403_FORBIDDEN
+    assert contains(response, 'detail',
+                    'You do not have permission to perform this action.')
 
 
-# def test_student_cant_update_lessons():
-#     assert 1 != 1
-
+def test_student_cant_update_lessons():
+    creteTeacher(1)
+    createStudents(1)
+    creteInstrument(1)
+    createLessons(1)
+    client = get_client()
+    user = User.objects.get(username='s0')
+    print(user.username)
+    client.force_authenticate(user=user)
+    response = client.put(reverse('lessons-detail', kwargs={'pk': 1}), data={
+        "name": "Lezione di Chitarra XYZ",
+        "instrument": 1,
+        "teacher": 1,
+        "date_time": "2021-12-21T20:54:00Z",
+        "duration": "01:00:00",
+        "cost": "11.50",
+    }, content_type='application/json')
+    assert response.status_code == status.HTTP_403_FORBIDDEN
+    assert contains(response, 'detail',
+                    'You do not have permission to perform this action.')
 
 # def student_view_only_own_booking():
 #     assert 1 != 1
@@ -364,8 +385,6 @@ def test_teacher_can_post_lessons(db):
     }, format='json')
     assert response.status_code == status.HTTP_201_CREATED
 
-# def test_teacher_cant_post_lessons_with_invalid_data(db):
-#     pass
 
 def test_teacher_can_delete_only_own_lessons():
     creteTeacher(1)
@@ -378,6 +397,49 @@ def test_teacher_can_delete_only_own_lessons():
     response = client.delete(reverse('lessons-detail', kwargs={'pk': 1}))
     assert response.status_code == status.HTTP_204_NO_CONTENT
 
+# def test_teacher_cant_post_lessons_with_invalid_data(db):
+#     pass
 
-# def test_teacher_can_update_only_own_lessons():
-#     assert 1 != 1
+
+def test_teacher_can_update_own_lessons():
+    creteTeacher(2)
+    createStudents(1)
+    creteInstrument(1)
+    createLessons(1)
+    client = get_client()
+    user = User.objects.get(username='t0')
+    print(user.username)
+    client.force_authenticate(user=user)
+    response = client.put(reverse('lessons-detail', kwargs={'pk': 1}), data={
+        "name": "Lezione di Chitarra XYZ",
+        "instrument": 1,
+        "teacher": 1,
+        "date_time": "2021-12-21T20:54:00Z",
+        "duration": "01:00:00",
+        "cost": "11.50",
+    }, content_type='application/json')
+    assert response.status_code == status.HTTP_403_FORBIDDEN
+    assert contains(response, 'detail',
+                    'You do not have permission to perform this action.')
+
+
+def test_teacher_can_update_only_own_lessons():
+    creteTeacher(2)
+    createStudents(1)
+    creteInstrument(1)
+    createLessons(1)
+    client = get_client()
+    user = User.objects.get(username='t0')
+    print(user.username)
+    client.force_authenticate(user=user)
+    response = client.put(reverse('lessons-detail', kwargs={'pk': 1}), data={
+        "name": "Lezione di Chitarra XYZ",
+        "instrument": 1,
+        "teacher": 2,
+        "date_time": "2021-12-21T20:54:00Z",
+        "duration": "01:00:00",
+        "cost": "11.50",
+    }, content_type='application/json')
+    assert response.status_code == status.HTTP_403_FORBIDDEN
+    assert contains(response, 'detail',
+                    'You do not have permission to perform this action.')
