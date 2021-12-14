@@ -1,5 +1,4 @@
 import json
-from typing import ParamSpecKwargs
 from attr import dataclass
 from rest_framework.authtoken.models import Token
 import pytest
