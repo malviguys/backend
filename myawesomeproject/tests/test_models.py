@@ -1,3 +1,4 @@
+from datetime import datetime
 import json
 
 import pytest
@@ -6,7 +7,8 @@ from django.urls import reverse, resolve
 from mixer.backend.django import mixer
 from rest_framework import status
 from rest_framework.test import APIClient
-
+from datetime import datetime, timedelta
+from zoneinfo import ZoneInfo
 
 def get_client(student=None):
     res = APIClient()
@@ -50,13 +52,13 @@ def test():
     assert 1 == 1
 
 def test_lesson_name_not_capitalized(db):
-    lesson = mixer.blend('restapi.Lesson', name='sasdasdas dong name')
+    lesson = mixer.blend('restapi.Lesson', name='sasdasdas dong name', date_time=datetime(2022, 10, 31, 12, tzinfo=ZoneInfo("Europe/Rome")))
     with pytest.raises(ValidationError) as err:
         lesson.full_clean()
     assert 'Lesson name must be capitalized' in str(err)
 
 def test_lesson_title_of_length_51_rises_exception(db):
-    lesson = mixer.blend('restapi.Lesson', name='A' * 51)
+    lesson = mixer.blend('restapi.Lesson', name='A' * 51, date_time=datetime(2022, 10, 31, 12, tzinfo=ZoneInfo("Europe/Rome")))
     with pytest.raises(ValidationError) as err:
         lesson.full_clean()
     assert 'Lesson name must be less than 50 char' in str(err)
