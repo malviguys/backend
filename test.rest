@@ -39,30 +39,43 @@ Authorization: Token {{authToken}}
 Content-Type: {{type}}
 
 {
-  "name": "Chitarra XYZjhkjhkjhkjhkjhkjhkjh",
-  "instrument": 1,
-  "teacher": 1,
-  "date_time": "2021-12-21T20:54:00Z",
+  "name": "Chitarra asdasd",
+  "teacher": {
+    "id": 1,
+    "name": "Teacher 1",
+    "user": 3
+  },
+  "instrument": {
+    "id": 1,
+    "name": "Guitar"
+  },
+  "date_time": "2021-12-21T21:54:00+01:00",
   "duration": "01:00:00",
-  "cost": "10.00",
-  "students": [1]
+  "cost": "10.00"
 }
 
 
 
 ###
-PUT {{baseUrl}}/lessons/3/
+PUT {{baseUrl}}/lessons/37/
 Authorization: Token {{authToken}} 
 Content-Type: {{type}}
 
 {
-  "name": "Chitarra XYZjhkjhkjhkjhkjhkjhkjh",
-  "instrument": 1,
-  "teacher": 1,
-  "date_time": "2021-12-21T20:54:00Z",
-  "duration": "01:00:00",
-  "cost": "10.00",
-  "students": [1]
+  "id": 37,
+  "name": "Chitarra asdasd",
+  "teacher": {
+    "id": 1,
+    "name": "Teacher 1",
+    "user": 3
+  },
+  "instrument": {
+    "id": 1,
+    "name": "Guitar"
+  },
+  "date_time": "2021-12-21T21:54:00+01:00",
+  "duration": "02:00:00",
+  "cost": "10.00"
 }
 
 

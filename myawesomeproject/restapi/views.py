@@ -18,9 +18,10 @@ class LessonView(viewsets.ModelViewSet):
         print("="*30 + " CREATE LESSON " + "="*50)
         try:
             teacher = Teacher.objects.get(user=request.user)
-            print("Teacher ", teacher)
+            print("Teacher ", teacher, "User ", teacher.user.id)
             print("request.data['teacher']", request.data['teacher'])
-            user = Teacher.objects.get(id=request.data['teacher'])
+            print("request.data['teacher']['user']", request.data['teacher']['user'])
+            user = Teacher.objects.get(user=request.data['teacher']['user'])
             print("User ", user)
             if teacher != user:
                 print("Teacher is not the same as the logged in user")

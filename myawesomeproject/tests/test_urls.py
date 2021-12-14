@@ -290,12 +290,19 @@ def test_student_cant_post_lessons(db):
     user = User.objects.get(username='s0')
     client.force_authenticate(user=user)
     response = client.post(reverse('lessons-list'), {
-        "name": "Lezione di Chitarra XYZ",
-        "instrument": 1,
-        "teacher": 1,
-        "date_time": "2021-12-21T20:54:00Z",
-        "duration": "01:00:00",
-        "cost": "11.50",
+        "name": "Chitarra asdasd",
+        "teacher": {
+            "id": 1,
+            "name": "t0",
+            "user": 1
+        },
+        "instrument": {
+            "id": 1,
+            "name": "Guitar"
+        },
+        "date_time": "2021-12-21T21:54:00+01:00",
+        "duration": "02:00:00",
+        "cost": "10.00"
     }, format='json')
     assert response.status_code == status.HTTP_403_FORBIDDEN
     assert contains(response, 'detail',
@@ -327,13 +334,20 @@ def test_student_cant_update_lessons():
     print(user.username)
     client.force_authenticate(user=user)
     response = client.put(reverse('lessons-detail', kwargs={'pk': 1}), data={
-        "name": "Lezione di Chitarra XYZ",
-        "instrument": 1,
-        "teacher": 1,
-        "date_time": "2021-12-21T20:54:00Z",
-        "duration": "01:00:00",
-        "cost": "11.50",
-    }, content_type='application/json')
+        "name": "Chitarra 1",
+        "teacher": {
+            "id": 1,
+            "name": "t0",
+            "user": 1
+        },
+        "instrument": {
+            "id": 1,
+            "name": "Guitar"
+        },
+        "date_time": "2021-12-21T21:54:00+01:00",
+        "duration": "10:00:00",
+        "cost": "10.00"
+    }, format="json")
     assert response.status_code == status.HTTP_403_FORBIDDEN
     assert contains(response, 'detail',
                     'You do not have permission to perform this action.')
@@ -375,15 +389,22 @@ def test_teacher_can_post_lessons(db):
     client.force_authenticate(user=user)
 
     response = client.post(reverse('lessons-list'), {
-        "name": "Chitarra XYZ",
-        "instrument": 1,
-        "teacher": 1,
-        "date_time": "2021-12-21T20:54:00Z",
-        "duration": "01:00:00",
-        "cost": "10.00",
+        "name": "Chitarra 1",
+        "teacher": {
+            "id": 1,
+            "name": "t0",
+            "user": 1
+        },
+        "instrument": {
+            "id": 1,
+            "name": "Guitar"
+        },
+        "date_time": "2021-12-21T21:54:00+01:00",
+        "duration": "02:00:00",
+        "cost": "10.00"
     }, format='json')
     assert response.status_code == status.HTTP_201_CREATED
-    assert response.data['name'] == 'Chitarra XYZ'
+    assert response.data['name'] == 'Chitarra 1'
 
 
 def test_teacher_can_delete_only_own_lessons():
@@ -411,16 +432,22 @@ def test_teacher_can_update_own_lessons():
     print(user.username)
     client.force_authenticate(user=user)
     response = client.put(reverse('lessons-detail', kwargs={'pk': 1}), data={
-        "id": 1,
-        "name": "Lezione di Chitarra XYZ",
-        "instrument": 1,
-        "teacher": 1,
-        "date_time": "2021-12-21T20:54:00Z",
-        "duration": "01:00:00",
-        "cost": "11.50",
-    })
+        "name": "Chitarra 1000",
+        "teacher": {
+            "id": 1,
+            "name": "t0",
+            "user": 1
+        },
+        "instrument": {
+            "id": 1,
+            "name": "Guitar"
+        },
+        "date_time": "2021-12-21T21:54:00+01:00",
+        "duration": "02:00:00",
+        "cost": "10.00"
+    }, format='json')
     assert response.status_code == status.HTTP_200_OK
-    assert response.data['name'] == 'Lezione di Chitarra XYZ'
+    assert response.data['name'] == 'Chitarra 1000'
 
 
 def test_teacher_can_update_only_own_lessons():
@@ -433,14 +460,20 @@ def test_teacher_can_update_only_own_lessons():
     print(user.username)
     client.force_authenticate(user=user)
     response = client.put(reverse('lessons-detail', kwargs={'pk': 1}), data={
-        "id": 1,
-        "name": "Lezione di Chitarra XYZ",
-        "instrument": 1,
-        "teacher": 1,
-        "date_time": "2021-12-21T20:54:00Z",
-        "duration": "01:00:00",
-        "cost": "11.50",
-    })
+        "name": "Chitarra 1000",
+        "teacher": {
+            "id": 2,
+            "name": "t0",
+            "user": 2
+        },
+        "instrument": {
+            "id": 1,
+            "name": "Guitar"
+        },
+        "date_time": "2021-12-21T21:54:00+01:00",
+        "duration": "02:00:00",
+        "cost": "10.00"
+    }, format='json')
     assert response.status_code == status.HTTP_403_FORBIDDEN
     assert contains(response, 'detail',
                     'You do not have permission to perform this action.')
