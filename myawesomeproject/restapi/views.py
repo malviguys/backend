@@ -7,8 +7,10 @@ from restapi.models import Lesson, Booking, Teacher, Student
 from restapi.permissions import *
 from restapi.serializers import *
 from django.contrib.auth.models import User
-
-
+from django.shortcuts import render
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework.parsers import JSONParser
+from django.core.files.storage import default_storage
 class LessonView(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated, IsOwnerOrReadOnlyLesson]
     serializer_class = LessonSerializer
