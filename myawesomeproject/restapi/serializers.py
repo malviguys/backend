@@ -2,9 +2,6 @@ from rest_framework import serializers
 from restapi.models import Lesson, Booking, Student, Teacher, Instrument
 from zoneinfo import ZoneInfo
 
-# TODO inserire le foregnkey nei serializzatori
-
-
 class InstrumentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Instrument

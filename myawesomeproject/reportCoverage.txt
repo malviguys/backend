@@ -1,0 +1,21 @@
+Name                                           Stmts   Miss  Cover   Missing
+----------------------------------------------------------------------------
+myawesomeproject/__init__.py                       0      0   100%
+myawesomeproject/asgi.py                           4      4     0%   10-16
+myawesomeproject/settings.py                      29      0   100%
+myawesomeproject/urls.py                          21      0   100%
+myawesomeproject/wsgi.py                           4      4     0%   10-16
+restapi/__init__.py                                0      0   100%
+restapi/admin.py                                   7      0   100%
+restapi/apps.py                                    4      0   100%
+restapi/migrations/0001_initial.py                 9      0   100%
+restapi/migrations/0002_alter_lesson_cost.py       5      0   100%
+restapi/migrations/__init__.py                     0      0   100%
+restapi/models.py                                 34      0   100%
+restapi/permissions.py                            12      2    83%   8, 15
+restapi/serializers.py                            67      2    97%   86-87
+restapi/urls.py                                    7      0   100%
+restapi/validators.py                             26      0   100%
+restapi/views.py                                  45      3    93%   25-27
+----------------------------------------------------------------------------
+TOTAL                                            274     15    95%

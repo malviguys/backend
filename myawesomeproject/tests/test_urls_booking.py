@@ -1,11 +1,12 @@
-from .init import *
 import pytest
+from .init import *
 from django.urls import reverse
 from rest_framework import status
 from django.contrib.auth.models import User
 from restapi.models import *
 
 pytestmark = pytest.mark.django_db
+
 
 class TestBooking:
 
@@ -117,3 +118,30 @@ class TestBooking:
         assert response.status_code == status.HTTP_404_NOT_FOUND
         assert contains(response, 'detail',
                         'Not found.')
+
+    def test_superuser_get_all_booking(self):
+        initDB(3)
+        my_admin = User.objects.create_superuser('myuser', 'myemail@test.com', 'MyAwesomePassword.99')
+        client = get_client()
+        client.credentials(HTTP_AUTHORIZATION='Token ' + loginToApi('myuser'))
+        response = client.get(reverse('booking-list'))
+        assert response.status_code == status.HTTP_200_OK
+        assert len(response.data) == 3
+
+    def test_create_booking_with_invalid_student(self):
+        initDB(3)
+        client = get_client()
+        client.credentials(HTTP_AUTHORIZATION='Token ' + loginToApi('s0'))
+        response = client.post(reverse('booking-list'), {
+            "student": {
+                "id": 3,
+                "name": "Studente 1",
+                "user": 9
+            },
+            "lesson": {
+                "id": 1
+            }
+        }, format='json')
+        assert response.status_code == status.HTTP_403_FORBIDDEN
+        assert contains(response, 'detail',
+                        'You do not have permission to perform this action.')

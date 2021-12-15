@@ -112,3 +112,18 @@ class TestModels:
             student.full_clean()
         assert 'Name must be capitalized' in str(err)
     
+    def test_lesson_string_output(self, db):
+        name='A'
+        instument=mixer.blend('restapi.Instrument', name='sasdasdas dong name')
+        teacher=mixer.blend('restapi.Teacher', name='sasdasdas dong name')
+        date_time=datetime(2022, 10, 31, 12, tzinfo=ZoneInfo("Europe/Rome"))
+        duration=timedelta(minutes=120)
+        cost=100
+        lesson = mixer.blend('restapi.Lesson', name=name, instrument=instument, teacher=teacher, date_time=date_time, duration=duration, cost=cost)
+        assert str(lesson) == f"NAME: {name} | INSTRUMENT: {instument} | TEACHER: {teacher} | DATE: {date_time} | DURATION: {duration} | COST: {cost}"
+    
+    def test_booking_string_output(self, db):
+        stutend=mixer.blend('restapi.Student', name='sasdasdas dong name')
+        lesson=mixer.blend('restapi.Lesson', name='A', date_time=datetime(2022, 10, 31, 12, tzinfo=ZoneInfo("Europe/Rome")), duration=timedelta(minutes=120), cost=100)
+        booking = mixer.blend('restapi.Booking', student=stutend, lesson=lesson)
+        assert str(booking) == f"STUDENT: {stutend} | LESSON: {lesson}"
