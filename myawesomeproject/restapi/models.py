@@ -13,7 +13,7 @@ class Lesson(models.Model):
     duration = models.DurationField(default=timedelta(
         minutes=60), validators=[validate_duration])
     cost = models.DecimalField(
-        max_digits=6, decimal_places=2, default=10.00, validators=[validate_cost])
+        max_digits=5, decimal_places=2, default=10.00, validators=[validate_cost])
 
     def __str__(self) -> str:
         return f"NAME: {self.name} | INSTRUMENT: {self.instrument} | TEACHER: {self.teacher} | DATE: {self.date_time} | DURATION: {self.duration} | COST: {self.cost}"
@@ -34,7 +34,8 @@ class Student(models.Model):
         get_user_model(), on_delete=models.CASCADE, related_name='student')
     name = models.CharField(max_length=50, validators=[
                             validate_name], default='')
-    type='student'
+    type = 'student'
+
     def __str__(self) -> str:
         return f"{self.name}"
 
@@ -44,7 +45,8 @@ class Teacher(models.Model):
         get_user_model(), on_delete=models.CASCADE, related_name='teacher')
     name = models.CharField(max_length=50, validators=[
                             validate_name], default='')
-    type='teacher'
+    type = 'teacher'
+
     def __str__(self) -> str:
         return f"{self.name}"
 

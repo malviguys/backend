@@ -18,13 +18,8 @@ class LessonView(viewsets.ModelViewSet):
         print("="*30 + " CREATE LESSON " + "="*50)
         try:
             teacher = Teacher.objects.get(user=request.user)
-            print("Teacher ", teacher, "User ", teacher.user.id)
-            print("request.data['teacher']", request.data['teacher'])
-            print("request.data['teacher']['user']", request.data['teacher']['user'])
             user = Teacher.objects.get(user=request.data['teacher']['user'])
-            print("User ", user)
             if teacher != user:
-                print("Teacher is not the same as the logged in user")
                 return Response(status=status.HTTP_403_FORBIDDEN, data={"detail": "You do not have permission to perform this action."})
         except:
             return Response(status=status.HTTP_403_FORBIDDEN, data={"detail": "You do not have permission to perform this action."})
@@ -38,12 +33,16 @@ class BookedView(viewsets.ModelViewSet):
     def get_queryset(self):
         if self.request.user.is_superuser:
             return Booking.objects.all()
-        return Booking.objects.filter(student=self.request.user.id)
+        user = Student.objects.get(user=self.request.user)
+        return Booking.objects.filter(student=user)
 
-    def create(self, request):
-        serializer = BookingSerializer(
-            data={"student": request.user.id, "lesson": request.data.get("lesson")})
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_403_FORBIDDEN)
+    def create(self, request, *args, **kwargs):
+        print("="*30 + " CREATE BOOKING " + "="*50)
+        try:
+            student = Student.objects.get(user=request.user)
+            user = Student.objects.get(user=request.data['student']['user'])
+            if student != user:
+                return Response(status=status.HTTP_403_FORBIDDEN, data={"detail": "You do not have permission to perform this action."})
+        except:
+            return Response(status=status.HTTP_403_FORBIDDEN, data={"detail": "You do not have permission to perform this action."})
+        return super().create(request, *args, **kwargs)

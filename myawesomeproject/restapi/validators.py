@@ -1,16 +1,12 @@
 from django.core.exceptions import ValidationError
-from django.contrib.auth import get_user_model
 from datetime import datetime, timedelta, date
-from dateutil.relativedelta import relativedelta
 
 
 def validate_name(value: str) -> None:
-    if len(value) == 0:
-        raise ValidationError(message='Lesson name must not be empty')
     if len(value) > 50:
-        raise ValidationError(message='Lesson name must be less than 50 char')
+        raise ValidationError(message='Name must be less than 50 char')
     if not value[0].isupper():
-        raise ValidationError(message='Lesson name must be capitalized')
+        raise ValidationError(message='Name must be capitalized')
 
 
 def validate_date_time(value: datetime) -> None:
@@ -18,7 +14,7 @@ def validate_date_time(value: datetime) -> None:
     limitePrenotazioni = TODAY + timedelta(weeks=12)
 
     if value.timestamp() < TODAY.timestamp():
-        raise ValidationError(message='Lesson date must be > now')
+        raise ValidationError(message='Lesson date_time cannot be in the past')
     if value.timestamp() > limitePrenotazioni.timestamp():
         raise ValidationError(
             message='Lesson date must not be < now + 3months')
@@ -33,24 +29,8 @@ def validate_duration(value: timedelta) -> None:
 
 
 def validate_cost(value: float) -> None:
-    integerPart = int(value)
     decimalPart = value-int(value)
     if value <= 0:
         raise ValidationError(message="Lesson cost must be positive value")
-    if decimalPart >= 100:
-        raise ValidationError(
-            message="The decimal part of lesson cost must be < 100")
     if value > 256:
         raise ValidationError(message="The maximum cost for lesson is 256$")
-
-
-def validate_teacher(value: enumerate) -> None:
-    pass
-
-
-def validate_instrument(value: enumerate) -> None:
-    pass
-
-
-def validate_students(value: get_user_model) -> None:
-    pass
