@@ -82,3 +82,8 @@ class TeacherView(viewsets.ModelViewSet):
         except:
             return Response(status=status.HTTP_400_BAD_REQUEST, data={"detail": "Teacher Not Found"})
         return Response(status=status.HTTP_200_OK,data=json)
+
+class InstrumentView(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
+    serializer_class = InstrumentSerializer
+    queryset = Instrument.objects.all()

@@ -204,5 +204,9 @@ GET {{baseUrl}}/teacher
 Authorization: Token {{authToken}} 
 
 ###
-GET {{baseUrl}}/teacher/1
+GET {{baseUrl}}/teacher/2
+Authorization: Token {{authToken}} 
+
+###
+GET {{baseUrl}}/instrument
 Authorization: Token {{authToken}} 
