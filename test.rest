@@ -3,6 +3,16 @@
 @authToken = {{login.response.body.key}}
 @type = application/json
 
+###
+# @name login
+POST {{baseUrl}}/auth/login/
+Content-Type: {{type}}
+
+{
+  "username": "paola",
+  "password": "paola"
+}
+###
 # @name login
 POST {{baseUrl}}/auth/login/
 Content-Type: {{type}}
@@ -34,7 +44,7 @@ Content-Type: {{type}}
 ### LESSONS ####
 
 ###
-GET {{baseUrl}}/lessons
+GET {{baseUrl}}/lessons/
 Authorization: Token {{authToken}}
 
 
@@ -178,4 +188,21 @@ POST {{baseUrl}}/auth/password/change/
 
 ###
 GET {{baseUrl}}/auth/user/
+Authorization: Token {{authToken}} 
+
+
+###
+GET {{baseUrl}}/student
+Authorization: Token {{authToken}}
+
+###
+GET {{baseUrl}}/student/2
+Authorization: Token {{authToken}} 
+
+###
+GET {{baseUrl}}/teacher
+Authorization: Token {{authToken}} 
+
+###
+GET {{baseUrl}}/teacher/1
 Authorization: Token {{authToken}} 
